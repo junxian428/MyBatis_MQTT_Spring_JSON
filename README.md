@@ -15,9 +15,14 @@ mosquitto_pub -t Hello -m "{\"Temp\": 28.0, \"pressure\": 50.0, \"amp\": 10.0, \
 
 mosquitto_pub -t Hello -m '{\"Temp\": 18.0, \"pressure\": 20.0, \"amp\": 50.0, \"status\": \"Close\"}'
 
+Development Environment
 
  mosquitto_pub -t Hello -m '{\"device\": \"DeviceName\",\"Temp\": 25.5,\"pressure\": 1013.25,\"amp\": 3.14,\"status\": \"Status\",\"valve1\": \"Valve1Name\",\"valve1_status\": \"Valve1Status\",\"valve2\": \"Valve2Name\",\"valve2_status\": \"Valve2Status\",\"valve3\": \"Valve3Name\",\"valve3_status\": \"Valve3Status\",\"timer1\": \"Timer1Value\",\"timer2\": \"Timer2Value\"}'
  
+
+Production Environment
+
+  mosquitto_pub -h X.X.X.X -p 1883 -t Hello -m '{\"device\": \"NX Series\",\"Temp\": 25.5,\"pressure\": 1013.25,\"amp\": 3.14,\"status\": \"Ok\",\"valve1\": \"OMRON\",\"valve1_status\": \"OMRON\",\"valve2\": \"OMRON\",\"valve2_status\": \"Siemen\",\"valve3\": \"OMRON\",\"valve3_status\": \"OMRON\",\"timer1\": \"OMRON\",\"timer2\": \"OMRON\"}'
 
 {
   \"device\": \"DeviceName\",

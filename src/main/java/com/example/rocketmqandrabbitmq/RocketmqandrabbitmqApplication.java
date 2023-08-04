@@ -27,7 +27,7 @@ import com.google.gson.JsonObject;
 @SpringBootApplication
 public class RocketmqandrabbitmqApplication {
 
-    private static final String BROKER_URL = "tcp://192.168.10.33:1883";
+    private static final String BROKER_URL = "tcp://0.0.0.0:1883";
 
 
     public static void main(String[] args) {
@@ -49,7 +49,7 @@ public class RocketmqandrabbitmqApplication {
 
 class MqttPublisher {
 
-    private String brokerUrl="tcp://192.168.10.33:1883";
+    private String brokerUrl="tcp://0.0.0.0:1883";
     private String clientId = "1";
     private IMqttClient mqttClient;
 
@@ -80,7 +80,7 @@ class MqttPublisher {
 }
 
 class MQTTSubscriber {
-    private static final String BROKER_URL = "tcp://192.168.10.33:1883";
+    private static final String BROKER_URL = "tcp://0.0.0.0:1883";
     private String topic;
     private DeviceMapper deviceMapper;
 
