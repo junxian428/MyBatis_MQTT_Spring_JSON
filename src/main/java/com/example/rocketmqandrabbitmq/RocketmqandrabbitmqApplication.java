@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.example.rocketmqandrabbitmq.Entity.MessageData;
+import com.example.rocketmqandrabbitmq.Entity.Valve;
 import com.example.rocketmqandrabbitmq.Mapper.DeviceMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -26,7 +27,7 @@ import com.google.gson.JsonObject;
 @SpringBootApplication
 public class RocketmqandrabbitmqApplication {
 
-    private static final String BROKER_URL = "tcp://";
+    private static final String BROKER_URL = "tcp://192.168.10.33:1883";
 
 
     public static void main(String[] args) {
@@ -48,7 +49,7 @@ public class RocketmqandrabbitmqApplication {
 
 class MqttPublisher {
 
-    private String brokerUrl="tcp://192.168.10.48:1883";
+    private String brokerUrl="tcp://192.168.10.33:1883";
     private String clientId = "1";
     private IMqttClient mqttClient;
 
@@ -79,7 +80,7 @@ class MqttPublisher {
 }
 
 class MQTTSubscriber {
-    private static final String BROKER_URL = "tcp://192.168.10.48:1883";
+    private static final String BROKER_URL = "tcp://192.168.10.33:1883";
     private String topic;
     private DeviceMapper deviceMapper;
 
@@ -120,7 +121,7 @@ class MQTTSubscriber {
                                 DeviceMapper deviceMapper = session.getMapper(DeviceMapper.class);
                                 
                                 // Use the DeviceMapper to insert device data
-                                deviceMapper.insertDeviceData(message.toString());
+                                //deviceMapper.insertDeviceData(message.toString());
                                 // Convert the message object to a JSON string
                                 // Commit the transaction (if needed)
                                   // Convert JSON string to Java object
@@ -132,23 +133,79 @@ class MQTTSubscriber {
                                 JsonObject jsonObject = new Gson().fromJson(message.toString(), JsonObject.class);
 
                                 // Extract the values of Temp, pressure, amp, and status
+
+
+
+
+
+
+                                //Version 2
+                                /* 
                                 double temp = jsonObject.get("Temp").getAsDouble();
                                 double pressure = jsonObject.get("pressure").getAsDouble();
                                 double amp = jsonObject.get("amp").getAsDouble();
                                 String status = jsonObject.get("status").getAsString();
 
-                                // Print the extracted values
+                                */
+                                double temp = jsonObject.get("Temp").getAsDouble();
+                                double pressure = jsonObject.get("pressure").getAsDouble();
+                                double amp = jsonObject.get("amp").getAsDouble();
+                                String status = jsonObject.get("status").getAsString();
+                                String device= jsonObject.get("device").getAsString();
+
+                                String valve1 = jsonObject.get("valve1").getAsString();
+                                String valve1_status = jsonObject.get("valve1_status").getAsString();
+
+                                
+                                String valve2 = jsonObject.get("valve2").getAsString();
+                                String valve2_status = jsonObject.get("valve2_status").getAsString();
+
+                                String valve3 = jsonObject.get("valve3").getAsString();
+                                String valve3_status = jsonObject.get("valve3_status").getAsString();
+
+
+
+                                String timer1 = jsonObject.get("timer1").getAsString();
+                                String timer2 = jsonObject.get("timer2").getAsString();
+
+
+                                System.out.println("Device: " + device);
                                 System.out.println("Temp: " + temp);
                                 System.out.println("Pressure: " + pressure);
                                 System.out.println("Amp: " + amp);
                                 System.out.println("Status: " + status);
+                                System.out.println("Valve 1 : " + valve1);
+                                System.out.println("Valve 1 Status : " + valve1_status);
+
+
+                                System.out.println("Valve 2 : " + valve2);
+                                System.out.println("Valve 2 Status : " + valve2_status);
+
+                                System.out.println("Valve 3 : " + valve3);
+                                System.out.println("Valve 3 Status : " + valve3_status);
+
+
+
+                                System.out.println("Timer 1 : " + timer1);
+                                System.out.println("Timer 2 : " + timer2);
+                                // Print the extracted values
+                                /* 
+                                System.out.println("Temp: " + temp);
+                                System.out.println("Pressure: " + pressure);
+                                System.out.println("Amp: " + amp);
+                                System.out.println("Status: " + status);
+                                */
 
                                   // Parse the JSON string into a MessageData object
-                                MessageData data = new Gson().fromJson(message.toString(), MessageData.class);
+                                Valve data = new Gson().fromJson(message.toString(), Valve.class);
 
                                 // Insert the data into the database
                                 // Get your mapper instance (e.g., using MyBatis).
-                                deviceMapper.insertDeviceData2(data);
+
+
+
+                                deviceMapper.insertDeviceData3(data);
+
                                 // Convert the message object to a JSON string
                                 //String jsonString = gson.toJson(message.toString());
 
